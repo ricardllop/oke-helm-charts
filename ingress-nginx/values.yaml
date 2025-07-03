@@ -1,6 +1,7 @@
 ingress-nginx:
   controller:
     service:
+      loadBalancerIP: "158.179.210.182"
       annotations:
         oci.oraclecloud.com/load-balancer-type: "nlb"
   namespaceOverride: ingress-nginx-free-oracle-nlb
