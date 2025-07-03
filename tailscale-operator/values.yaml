@@ -1,0 +1,4 @@
+tailscale-operator:
+  # If unset a Secret named operator-oauth must be precreated
+  oauth: null
+  oauthSecretVolume: null
