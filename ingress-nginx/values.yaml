@@ -4,5 +4,10 @@ ingress-nginx:
       loadBalancerIP: "158.179.210.182"
       annotations:
         oci.oraclecloud.com/load-balancer-type: "nlb"
+    config:
+    # Disable strict path validation, to work around a bug in ingress-nginx with cert manager
+    # https://cert-manager.io/docs/releases/release-notes/release-notes-1.18/#acme-http01-challenge-paths-now-use-pathtype-exact-in-ingress-routes
+    # https://github.com/kubernetes/ingress-nginx/issues/11176
+      strict-validate-path-type: false
   namespaceOverride: ingress-nginx-free-oracle-nlb
 namespace: ingress-nginx-free-oracle-nlb
