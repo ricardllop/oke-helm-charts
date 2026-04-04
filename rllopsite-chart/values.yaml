@@ -5,7 +5,7 @@
 replicaCount: 1
 namespace: "rllopsite"
 image:
-  repository: rllopdev/rllopsite
+  repository: docker.io/rllopdev/rllopsite
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "ga-2026.02.25-2112"
