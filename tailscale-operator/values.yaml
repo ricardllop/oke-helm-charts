@@ -1,4 +1,5 @@
 tailscale-operator:
   # If unset a Secret named operator-oauth must be precreated
-  oauth: null
+  # This is created by terraform on the argo-cd module
+  oauth: {}
   oauthSecretVolume: null
