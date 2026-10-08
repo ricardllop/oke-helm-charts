@@ -1,0 +1,15 @@
+{{- if .Values.httpRoute.enabled -}}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ .Values.httpRoute.tls.secretName }}
+  labels:
+    {{- include "rllopsite-deploy-helm-chart.labels" . | nindent 4 }}
+spec:
+  secretName: {{ .Values.httpRoute.tls.secretName }}
+  issuerRef:
+    kind: ClusterIssuer
+    name: {{ .Values.httpRoute.tls.clusterIssuer }}
+  dnsNames:
+    {{- toYaml .Values.httpRoute.hostnames | nindent 4 }}
+{{- end }}

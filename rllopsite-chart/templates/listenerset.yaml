@@ -1,0 +1,28 @@
+{{- if .Values.httpRoute.enabled -}}
+# Adds one https listener per hostname to the shared Gateway, all of them with the
+# certificate of this chart. The HTTPRoute attaches to these listeners.
+apiVersion: gateway.networking.k8s.io/v1
+kind: ListenerSet
+metadata:
+  name: {{ include "rllopsite-deploy-helm-chart.fullname" . }}
+  labels:
+    {{- include "rllopsite-deploy-helm-chart.labels" . | nindent 4 }}
+spec:
+  parentRef:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: {{ .Values.httpRoute.gateway.name }}
+    namespace: {{ .Values.httpRoute.gateway.namespace }}
+  listeners:
+    {{- range .Values.httpRoute.hostnames }}
+    - name: {{ . | replace "." "-" }}
+      hostname: {{ . | quote }}
+      protocol: HTTPS
+      port: 443
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: {{ $.Values.httpRoute.tls.secretName }}
+    {{- end }}
+{{- end }}

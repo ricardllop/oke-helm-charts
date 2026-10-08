@@ -28,26 +28,27 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 80
-ingress:
+httpRoute:
   enabled: true
-  className: nginx
-  annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-  hosts:
-    - host: ricardllop.com
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-    - host: www.ricardllop.com
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
+  annotations: {}
+  # Shared Gateway of the kgateway chart. It only has an http listener: this chart adds
+  # the https listeners for the hostnames below with a ListenerSet, plus their
+  # certificate and the http -> https redirect.
+  gateway:
+    name: public-gateway
+    namespace: kgateway-system
+    httpListener: http
+  hostnames:
+    - ricardllop.com
+    - www.ricardllop.com
   tls:
-    - secretName: ricardllop-com-tls-skmls
-      hosts:
-        - ricardllop.com
-        - www.ricardllop.com
+    clusterIssuer: letsencrypt-prod
+    secretName: ricardllop-com-tls
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
 resources: {}
 livenessProbe:
   httpGet:

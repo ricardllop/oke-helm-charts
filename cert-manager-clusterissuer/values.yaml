@@ -2,6 +2,18 @@ namespace: cert-manager
 
 cert-manager:
   installCRDs: true
+  # Needed by the gatewayHTTPRoute solver of the ClusterIssuer. With this enabled
+  # cert-manager does not start until the Gateway API CRDs exist in the cluster.
+  config:
+    apiVersion: controller.config.cert-manager.io/v1alpha1
+    kind: ControllerConfiguration
+    gatewayAPI:
+      enabled: true
 
 clusterIssuer:
   email: ricardlloppalou@gmail.com
+  # Gateway listener that serves the HTTP-01 challenges (defined in the kgateway chart)
+  http01Gateway:
+    name: public-gateway
+    namespace: kgateway-system
+    sectionName: http

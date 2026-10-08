@@ -1,0 +1,9 @@
+namespace: kgateway-system
+
+gateway:
+  name: public-gateway
+  # Reserved public IP in Oracle Cloud. The DNS records of the public hostnames point to it.
+  loadBalancerIP: "158.179.210.182"
+  # Copied to the LoadBalancer Service that kgateway creates for the Gateway
+  annotations:
+    oci.oraclecloud.com/load-balancer-type: "nlb"
