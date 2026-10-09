@@ -8,7 +8,7 @@ image:
   repository: docker.io/rllopdev/rllopsite
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "ga-2026.10.08-2118"
+  tag: "ga-2026.10.09-1010"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: "rllopapp"
